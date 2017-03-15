@@ -3,36 +3,7 @@
  */
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { Container, Content, Item, Input, Button } from 'native-base';
-import t from 'tcomb-form-native';
-
-const Form = t.form.Form;
-
-let Person = t.struct({
-    username: t.String,              // a required string
-    password: t.String,  // an optional string
-    autologin: t.Boolean        // a boolean
-});
-let options = {
-    auto: 'placeholders',
-    fields: {
-        username: {
-            label: '',
-            placeholder: '用户名'
-        },
-        password: {
-            label: '',
-            placeholder: '密码'
-        },
-        autologin: {
-            label: '自动登录',
-            value: true
-        }
-    }
-}; // optional rendering options (see documentation)
-let values = {
-    autologin: true
-}
+import { Container, Content, Item, Input, Button, Form, Label } from 'native-base';
 
 class LoginPage extends Component {
     constructor(props){
@@ -52,29 +23,39 @@ class LoginPage extends Component {
     }
     render() {
         return (
-
             <Container>
-            <View style={styles.container}>
-                <Form
-                    ref="form1"
-                    type={Person}
-                    options={options}
-                    value={values}
-                />
-                <Button block success>
-                    <Text>Success</Text>
-                </Button>
-            </View>
+                <View style={styles.view}>
+                </View>
+                <Content>
+                    <Form>
+                        <Item fixedLabel>
+                            <Label>用户名</Label>
+                            <Input ref="inputUsername" placeholder="请输入用户名"/>
+                        </Item>
+                        <Item fixedLabel last>
+                            <Label>密码</Label>
+                            <Input placeholder="请输入密码"/>
+                        </Item>
+                        <View style={{marginTop:20}}>
+                        </View>
+                        <Button ref="loginBtn" block success style={{marginLeft:10,marginRight:10}} onPress={()=>{this.props.onLogin(true)}}>
+                            <Text style={{fontSize:18}}>登录</Text>
+                        </Button>
+                    </Form>
+                </Content>
             </Container>
         );
     }
 }
 const styles = StyleSheet.create({
+    view:{
+        marginTop: 100
+    },
     container: {
         justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff',
+        marginTop: '100px',
+        padding: '20px',
+        backgroundColor: '#85ff60',
     },
     title: {
         fontSize: 30,

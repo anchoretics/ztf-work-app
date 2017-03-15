@@ -24,7 +24,13 @@ export default class app extends Component {
         }
 
     }
-
+    handleLogin(result){
+        if(result==true){
+            this.setState({
+                isLogin: true
+            });
+        }
+    }
     render() {
         return (
             this.state.isLogin?(
@@ -49,7 +55,7 @@ export default class app extends Component {
                     <Text>内容</Text>
                 </Content>
 
-                <Footer style={styles.tab}>
+                <Footer>
                     <FooterTab>
                         <Button
                             onPress={()=>{
@@ -105,17 +111,8 @@ export default class app extends Component {
                 </Footer>
             </Container>): (
             <Container>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Icon name='arrow-back' />
-                        </Button>
-                    </Left>
-                    <Body>
-                    </Body>
-                </Header>
                 <Content>
-                    <LoginPage>内容</LoginPage>
+                    <LoginPage onLogin={this.handleLogin.bind(this)}></LoginPage>
                 </Content>
             </Container>)
         );
@@ -130,7 +127,7 @@ const styles = StyleSheet.create({
         height: 50
     },
     tab: {
-        height: 45
+        height: '45'
     },
     icon: {
         color: '#FDBD00'
