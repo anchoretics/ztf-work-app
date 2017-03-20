@@ -19,7 +19,7 @@ export default class WelcomPage extends Component{
         }
         this.timer = setTimeout(()=>{
             this.props.navigator.resetTo({component: HomePage});
-        },2000);
+        },100);
     }
 
     render(){

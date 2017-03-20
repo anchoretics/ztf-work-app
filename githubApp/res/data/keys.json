@@ -1,0 +1,91 @@
+[
+    {
+        "path": "stars:>1",
+        "name": "ALL",
+        "short_name": "ALL",
+        "checked": true
+    },
+    {
+        "path": "iOS",
+        "name": "iOS",
+        "checked": true
+    },
+    {
+        "path": "react-native",
+        "name": "React Native",
+        "checked": true
+    },
+    {
+        "path": "MySQL",
+        "name": "MySQL",
+        "checked": false
+    },
+    {
+        "path": " AngularJS",
+        "name": " AngularJS",
+        "checked": false
+    },
+    {
+        "path": " jQuery",
+        "name": " jQuery",
+        "checked": false
+    },
+    {
+        "path": " react",
+        "name": " React",
+        "checked": false
+    },
+    {
+        "path": " javascript",
+        "name": " javascript",
+        "checked": true
+    },
+    {
+        "path": "unknown",
+        "name": "Unknown",
+        "checked": true
+    },
+    {
+        "path": "as3",
+        "name": "ActionScript",
+        "short_name": "AS",
+        "checked": true
+    },
+    {
+        "path": "apacheconf",
+        "name": "ApacheConf",
+        "checked": true
+    },
+    {
+        "path": "nasm",
+        "name": "Assembly",
+        "short_name": "NASM",
+        "checked": true
+    },
+    {
+        "path": "bat",
+        "name": "Batchfile",
+        "short_name": "BAT",
+        "checked": true
+    },
+    {
+        "path": "c",
+        "name": "C",
+        "checked": true
+    },
+    {
+        "path": "csharp",
+        "name": "C#",
+        "checked": true
+    },
+    {
+        "path": "cpp",
+        "name": "C++",
+        "checked": true
+    },
+    {
+        "path": "cmake",
+        "name": "CMake",
+        "checked": true
+    },
+]

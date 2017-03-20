@@ -19,6 +19,10 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator'
+import PopularPage from './PopularPage'
+import AsyncStorageTest from '../AsyncStorageTest'
+import MyPage from './my/MyPage'
+
 
 export default class HomePage extends Component {
     constructor(props){
@@ -34,38 +38,38 @@ export default class HomePage extends Component {
                     <TabNavigator.Item
                         title="最热"
                         selected={this.state.selectedTab === 'home'}
-                        selectedTitleStyle={{color:'red'}}
+                        selectedTitleStyle={{color:'#FFB5A1'}}
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_popular.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'red'}]} source={require('../../res/images/ic_popular.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_popular.png')} />}
                         onPress={() => this.setState({ selectedTab: 'home' })}>
-                        <View style={styles.page1}></View>
+                        <PopularPage {...this.props.params} navigator={this.props.navigator}></PopularPage>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="趋势"
                         selected={this.state.selectedTab === 'trending'}
-                        selectedTitleStyle={{color:'red'}}
+                        selectedTitleStyle={{color:'#FFB5A1'}}
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_trending.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'red'}]} source={require('../../res/images/ic_trending.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_trending.png')} />}
                         onPress={() => this.setState({ selectedTab: 'trending' })}>
-                        <View style={styles.page2}></View>
+                        <AsyncStorageTest></AsyncStorageTest>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="收藏"
                         selected={this.state.selectedTab === 'favorite'}
-                        selectedTitleStyle={{color:'red'}}
+                        selectedTitleStyle={{color:'#FFB5A1'}}
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_favorite.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'red'}]} source={require('../../res/images/ic_favorite.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_favorite.png')} />}
                         onPress={() => this.setState({ selectedTab: 'favorite' })}>
                         <View style={styles.page3}></View>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="我的"
                         selected={this.state.selectedTab === 'profile'}
-                        selectedTitleStyle={{color:'red'}}
+                        selectedTitleStyle={{color:'#FFB5A1'}}
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_my.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'red'}]} source={require('../../res/images/ic_my.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_my.png')} />}
                         onPress={() => this.setState({ selectedTab: 'profile' })}>
-                        <View style={styles.page4}></View>
+                        <MyPage {...this.props.params} navigator={this.props.navigator}></MyPage>
                     </TabNavigator.Item>
                 </TabNavigator>
             </View>

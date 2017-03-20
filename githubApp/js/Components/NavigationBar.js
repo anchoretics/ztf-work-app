@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        color: 'white'
+        color: 'black'
     },
     statusBar: {
         height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT : 0,
