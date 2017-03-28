@@ -18,6 +18,7 @@ import {
 
 } from 'react-native';
 
+import { ListItem, Left, Body, Right, Switch, Radio, Icon, Badge, CheckBox } from 'native-base'
 import TabNavigator from 'react-native-tab-navigator'
 import PopularPage from './PopularPage'
 import AsyncStorageTest from '../AsyncStorageTest'
@@ -60,7 +61,10 @@ export default class HomePage extends Component {
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_favorite.png')} />}
                         renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_favorite.png')} />}
                         onPress={() => this.setState({ selectedTab: 'favorite' })}>
-                        <View style={styles.page3}></View>
+                        <View style={styles.page3}>
+                            <Icon style={{color:'red'}} name="menu" />
+
+                        </View>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="我的"
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     },
     page3: {
         flex: 1,
-        backgroundColor: 'blue'
+        backgroundColor: 'white'
     },
     page4: {
         flex: 1,

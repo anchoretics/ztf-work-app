@@ -25,28 +25,27 @@ export default class githubApp extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <TabNavigator>
-          <TabNavigator.Item
-              selected={this.state.selectedTab === 'home'}
-              title="Home1"
-              renderIcon={() => <Image source={require('./res/images/popular')} />}
-              renderSelectedIcon={() => <Image source={require('./res/images/popular')} />}
-              badgeText="1"
-              onPress={() => this.setState({ selectedTab: 'home' })}>
-            <View style={styles.page}></View>
-          </TabNavigator.Item>
-          <TabNavigator.Item
-              selected={this.state.selectedTab === 'profile'}
-              title="Profile"
-              renderIcon={() => <Image source={require('./res/images/popular')} />}
-              renderSelectedIcon={() => <Image source={require('./res/images/popular')} />}
-              renderBadge={() => <CustomBadgeView />}
-              onPress={() => this.setState({ selectedTab: 'profile' })}>
-              {profileView}
-          </TabNavigator.Item>
-        </TabNavigator>
-      </View>
+        <Container>
+          <Content>
+            <ListItem>
+              <Text>Simon Mignolet</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Nathaniel Clyne</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Dejan Lovren</Text>
+            </ListItem>
+            <ListItem icon>
+              <Body>
+              <Text>Bluetooth</Text>
+              </Body>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+          </Content>
+        </Container>
     );
   }
 }

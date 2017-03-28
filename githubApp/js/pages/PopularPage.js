@@ -17,11 +17,13 @@ import NavigationBar from '../Components/NavigationBar';
 import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
 import RepositoryCell from '../Components/RepositoryCell'
 
+import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import Utils from '../Utils';
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&page=1&per_page=10&sort=stars';
+const dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
 
 export default class PopularPage extends Component{
     constructor(props){
@@ -47,7 +49,9 @@ export default class PopularPage extends Component{
 
         });
     }
+    onSelect(item){
 
+    }
     render(){
         let content = this.state.languages.length > 0 ?
             <ScrollableTabView
@@ -62,7 +66,7 @@ export default class PopularPage extends Component{
 
         return (
         <View style={styles.container}>
-            <NavigationBar title={"Popular"}
+            <NavigationBar title={"最热门"}
                            statusBar={{
                                backgroundColor: '#B8F4FF',
                            }}
@@ -88,18 +92,32 @@ class PopularTab extends Component{
     loadData(){
         this.setState({
             isRefreshing: true
-        })
-        Utils.get(this.genUrl())
-        .then(result => {
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(result.items),
-                isRefreshing: false
+        });
+        let url = this.genUrl();
+        dataRepository
+            .fetchRepository(url)
+            .then(result=> {
+                this.items = result && result.items ? result.items : result ? result : [];
+                // this.getFavoriteKeys();
+                if (result && result.update_date && !Utils.checkDate(result.update_date)){
+                    return dataRepository.fetchNetRepository(url);
+                }else{
+                    return result.items;
+                }
             })
-        }).catch((err)=>{
-            this.setState({
-                isRefreshing: false
+            .then((items)=> {
+                if (!items || items.length === 0)return;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(items),
+                    isRefreshing: false
+                })
             })
-        })
+            .catch(error=> {
+                console.log(error);
+                this.setState({
+                    isRefreshing: false
+                });
+            })
     }
     genUrl(){
         return URL+this.props.tabLabel+QUERY_STR;

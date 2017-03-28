@@ -36,4 +36,19 @@ export default class Utils{
             .catch( error => reject(error) );
         });
     }
+
+    /**
+     * 检查项目更新时间
+     * @param longTime 项目更新时间
+     * @return {boolean} true 不需要更新,false需要更新
+     */
+    static checkDate(longTime) {
+        // return false;
+        let current = new Date().getTime();
+        let limit = 1000 * 60 * 60 * 24; // 默认一天
+        if(longTime < (current-limit)){
+            return false;
+        }
+        return true;
+    }
 }

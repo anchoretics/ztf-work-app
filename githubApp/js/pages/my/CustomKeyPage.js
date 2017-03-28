@@ -18,10 +18,12 @@ import { ListItem, Left, Body, Right, Switch, Radio, Text, Icon, Badge, CheckBox
 
 import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import ViewUtils from '../../ViewUtils';
+import _ from 'lodash'
 
 export default class CustomKeyPage extends Component{
     constructor(props){
         super(props);
+        this.originArray = [];
         this.isRemoveKey=this.props.isRemoveKey?true:false;
         this.state = {
             data: []
@@ -32,7 +34,12 @@ export default class CustomKeyPage extends Component{
         this.languageDao = new LanguageDao(this.props.flag);
 
         this.languageDao.fetch().then((data)=> {
-            console.log('data: ', data);
+            this.originArray = _.cloneDeep(data);
+            if(this.isRemoveKey){
+                for(let i=0;i<data.length;i++){
+                    data[i].checked = false;
+                }
+            }
             this.setState({
                 data: data
             })
@@ -42,7 +49,17 @@ export default class CustomKeyPage extends Component{
     }
 
     _save(){
-        this.languageDao.save(this.state.data);
+        let _saveArray = this.state.data;
+        if(this.isRemoveKey){
+            let _removedArray = _.remove(_saveArray, n => {
+                return n.checked;
+            });
+            for(let i=0;i<_removedArray.length;i++){
+                this.originArray.splice(_.findIndex(this.originArray,{name: _removedArray[i].name}),1);
+            }
+            _saveArray = this.originArray;
+        }
+        this.languageDao.save(_saveArray);
     }
     _renderScrollViews(){
         if(this.state.data && this.state.data.length>0){
@@ -69,14 +86,16 @@ export default class CustomKeyPage extends Component{
         }
     }
     render(){
+        let title = this.isRemoveKey?'标签移除':'自定义标签';
+        let rightButtonTitle = this.isRemoveKey?'移除':'保存';
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={"自定义标签"}
+                    title={title}
                     statusBar={{ backgroundColor: '#B8F4FF',}}
                     style={{backgroundColor: '#B8F4FF'}}
                     leftButton={ViewUtils.getLeftButton(()=>{this._save();this.props.navigator.pop();})}
-                    rightButton={ViewUtils.getRightButton('保存',()=>{this._save();this.props.navigator.pop();})}
+                    rightButton={ViewUtils.getRightButton(rightButtonTitle, ()=>{this._save();this.props.navigator.pop();})}
                 />
                 <View style={styles.container}>
                     <ScrollView>

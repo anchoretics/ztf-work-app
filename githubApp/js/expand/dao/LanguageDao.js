@@ -20,7 +20,7 @@ export default class LanguageDao{
                     reject(error);
                     return;
                 }
-                if (!result){
+                if (!result || JSON.parse(result).length==0){
                     var data=this.flag===FLAG_LANGUAGE.flag_language? langsData:keysData;
                     this.save(data);
                     resolve(data);

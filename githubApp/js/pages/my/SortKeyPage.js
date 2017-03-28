@@ -15,62 +15,66 @@ import {
 
 import NavigationBar from '../../Components/NavigationBar';
 import { ListItem, Left, Body, Right, Switch, Radio, Text, Icon, Badge, CheckBox } from 'native-base'
+import SortableListView from 'react-native-sortable-listview';
 
 import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import ViewUtils from '../../ViewUtils';
+import _ from 'lodash'
 
 export default class SortKeyPage extends Component{
     constructor(props){
         super(props);
-        this.isRemoveKey=this.props.isRemoveKey?true:false;
+        console.log(_.clone(['a']));
+        this.dataArray = [];
+        this.sortResultArray = [];
+        this.originCheckedArray = [];
         this.state = {
-            data: []
+            checkedArray: []
         }
     }
 
     componentDidMount(){
         this.languageDao = new LanguageDao(this.props.flag);
-
+        this._loadData();
+    }
+    _loadData(){
         this.languageDao.fetch().then((data)=> {
-            console.log('data: ', data);
-            this.setState({
-                data: data
-            })
+            this._getCheckedItems(data);
         }).catch((error)=> {
             console.log(error);
         });
     }
+    _getCheckedItems(result){
+        this.dataArray = result;
+        let checkedArray = [];
+        for(let i=0; i<result.length;i++){
+            let data = result[i];
+            if(data.checked)checkedArray.push(data);
 
-    _save(){
-        this.languageDao.save(this.state.data);
+        }
+        this.setState({
+            checkedArray: checkedArray
+        })
+        this.originCheckedArray = _.clone(checkedArray);
     }
-    _renderScrollViews(){
-        if(this.state.data && this.state.data.length>0){
-            console.log('222', this.state.data);
-            var views = [];
-            for(var i=0;i<this.state.data.length;i++){
-                let index = 0+i;
-                let view = <View key={i}>
-                    <ListItem key={index} onPress={()=>{
-                        console.log(index);
-                        this.state.data[index].checked = !this.state.data[index].checked;
-                        this.forceUpdate();
-                    }}>
-                        <CheckBox checked={this.state.data[index].checked} />
-                        <Body>
-                        <Text>{this.state.data[index].name}</Text>
-                        </Body>
-                    </ListItem>
-                </View>;
-                views.push(view);
-            }
-            return views;
-        }else{
-            return null;
+    _save(){
+        //TODO 判断更改了则保存
+        if(!_.isEqual(this.originCheckedArray, this.state.checkedArray)){
+            this.languageDao.save(this.state.checkedArray);
+            console.log('saved');
         }
     }
+    _renderSortCell(row){
+        return (
+            <ListItem style={{padding:7,margin:0}}>
+                <Icon style={{color:'#a4da00'}} name="menu" />
+                <Body>
+                <Text>{row.name}</Text>
+                </Body>
+            </ListItem>
+        )
+    }
     render(){
-        console.log(11);
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -80,12 +84,16 @@ export default class SortKeyPage extends Component{
                     leftButton={ViewUtils.getLeftButton(()=>{this._save();this.props.navigator.pop();})}
                     rightButton={ViewUtils.getRightButton('保存',()=>{this._save();this.props.navigator.pop();})}
                 />
-                <View style={styles.container}>
-                    <ScrollView>
-                        {/*{this.state.views}*/}
-                        {this._renderScrollViews()}
-                    </ScrollView>
-                </View>
+                <SortableListView
+                    data={this.state.checkedArray}
+                    order={Object.keys(this.state.checkedArray)}
+                    onRowMoved={e => {
+                        this.state.checkedArray.splice(e.to, 0, this.state.checkedArray.splice(e.from, 1)[0]);
+                        this.forceUpdate();
+                    }}
+                    renderRow={row => this._renderSortCell(row)}
+                >
+                </SortableListView>
             </View>
         )
     }

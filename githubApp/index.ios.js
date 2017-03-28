@@ -22,7 +22,6 @@ export default class githubApp extends Component {
   }
   render() {
     return (
-
         <Container>
             <Content>
                 <ListItem>

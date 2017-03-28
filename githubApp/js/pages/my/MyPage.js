@@ -58,6 +58,23 @@ export default class MyPage extends Component {
                             <Icon name="arrow-forward" />
                         </Right>
                     </ListItem>
+                    <ListItem icon onPress={()=>{
+                        this.props.navigator.push({
+                            component: CustomKeyPage,
+                            params: {
+                                ...this.props,
+                                flag:FLAG_LANGUAGE.flag_key,
+                                isRemoveKey: true
+                            }
+                        })
+                    }}>
+                        <Body>
+                        <Text>标签移除</Text>
+                        </Body>
+                        <Right>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
                 </View>
             </View>
         );
