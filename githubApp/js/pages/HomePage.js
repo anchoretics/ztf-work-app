@@ -21,7 +21,7 @@ import {
 import { ListItem, Left, Body, Right, Switch, Radio, Icon, Badge, CheckBox } from 'native-base'
 import TabNavigator from 'react-native-tab-navigator'
 import PopularPage from './PopularPage'
-import AsyncStorageTest from '../AsyncStorageTest'
+import TrendingPage from './TrendingPage'
 import MyPage from './my/MyPage'
 
 
@@ -43,7 +43,7 @@ export default class HomePage extends Component {
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_popular.png')} />}
                         renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_popular.png')} />}
                         onPress={() => this.setState({ selectedTab: 'home' })}>
-                        <PopularPage {...this.props.params} navigator={this.props.navigator}></PopularPage>
+                        <PopularPage {...this.props} ></PopularPage>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="趋势"
@@ -52,7 +52,7 @@ export default class HomePage extends Component {
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_trending.png')} />}
                         renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_trending.png')} />}
                         onPress={() => this.setState({ selectedTab: 'trending' })}>
-                        <AsyncStorageTest></AsyncStorageTest>
+                        <TrendingPage {...this.props} ></TrendingPage>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         title="收藏"
@@ -73,7 +73,7 @@ export default class HomePage extends Component {
                         renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_my.png')} />}
                         renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FFB5A1'}]} source={require('../../res/images/ic_my.png')} />}
                         onPress={() => this.setState({ selectedTab: 'profile' })}>
-                        <MyPage {...this.props.params} navigator={this.props.navigator}></MyPage>
+                        <MyPage {...this.props}></MyPage>
                     </TabNavigator.Item>
                 </TabNavigator>
             </View>
@@ -84,27 +84,12 @@ export default class HomePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
-    },
-    page1: {
-        flex: 1,
-        backgroundColor: 'red'
-    },
-    page2: {
-        flex: 1,
-        backgroundColor: 'green'
-    },
-    page3: {
-        flex: 1,
-        backgroundColor: 'white'
-    },
-    page4: {
-        flex: 1,
-        backgroundColor: '#ffa300'
+        //backgroundColor: '#F5FCFF',
     },
     image: {
         height: 22,
-        width: 22
+        width: 22,
+
     }
 
 });

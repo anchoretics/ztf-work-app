@@ -1,12 +1,15 @@
 /**
  * Created by lingfengliang on 2017/3/16.
+ * Repository的DAO操作，支持github关键字api获取的数据和Trending数据
  */
 
 
 import {
     AsyncStorage,
 } from 'react-native';
+
 import Trending from "GitHubTrending";
+
 export var FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'}
 
 export default class DataRepository {

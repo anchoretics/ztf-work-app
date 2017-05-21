@@ -1,5 +1,6 @@
 /**
  * Created by lingfengliang on 2017/3/17.
+ *
  */
 import React, { Component } from 'react';
 import {
@@ -16,7 +17,11 @@ export default class RepositoryCell extends Component{
 
     render(){
         return(
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={()=>{
+                    this.props.onSelect(this.props.data);
+                }}
+            >
                 <View style={styles.cell_container}>
                     <Text style={styles.title}>{this.props.data.full_name}</Text>
                     <Text style={styles.description}>{this.props.data.description}</Text>

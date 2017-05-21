@@ -6,10 +6,13 @@
  */
 
 module.exports = {
-	attributes: {
-		username: 'string',
-		email: 'string',
-		nickname: 'string'
-	}
+  attributes: {
+    userName: 'string',
+    email: 'string',
+    emailPassword: 'string',
+    empId: 'String',
+    empPassword: 'string',
+    avatar: 'string'
+  }
 };
 

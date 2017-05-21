@@ -16,6 +16,7 @@ import {
 import NavigationBar from '../Components/NavigationBar';
 import ScrollableTabView, {ScrollableTabBar,} from 'react-native-scrollable-tab-view';
 import RepositoryCell from '../Components/RepositoryCell'
+import RepositoryDetail from './RepositoryDetail'
 
 import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
@@ -30,6 +31,7 @@ export default class PopularPage extends Component{
         super(props);
         this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
         this.state = {
+            loading: false,
             languages: []
         }
     }
@@ -48,9 +50,6 @@ export default class PopularPage extends Component{
         }).catch((error)=> {
 
         });
-    }
-    onSelect(item){
-
     }
     render(){
         let content = this.state.languages.length > 0 ?
@@ -124,7 +123,7 @@ class PopularTab extends Component{
     }
     _renderRow(data){
         return (
-            <RepositoryCell data={data}/>
+            <RepositoryCell onSelect={this.onSelect.bind(this)} data={data}/>
         )
     }
     _renderRefreshControl(){
@@ -139,6 +138,16 @@ class PopularTab extends Component{
                 progressBackgroundColor="#ffff00"
             />
         )
+    }
+    onSelect(item){
+        console.log(item);
+        this.props.navigator.push({
+            component: RepositoryDetail,
+            params: {
+                ...this.props,
+                item: item
+            }
+        });
     }
     render(){
         return(

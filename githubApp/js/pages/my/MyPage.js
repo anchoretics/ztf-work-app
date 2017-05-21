@@ -5,13 +5,17 @@ import React, { Component } from 'react'
 import {
     StyleSheet,
     View,
+    AsyncStorage,
+    Alert
 } from 'react-native';
-import { ListItem, Left, Body, Right, Switch, Radio, Text, Icon, Badge, CheckBox } from 'native-base'
+import { Container, Content, ListItem, Left, Body, Right, Switch, Radio, Text, Icon, Badge, CheckBox } from 'native-base'
 
 import NavigationBar from '../../Components/NavigationBar';
 import CustomKeyPage from './CustomKeyPage';
 import SortKeyPage from './SortKeyPage';
 import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
+
+import _ from 'lodash'
 
 export default class MyPage extends Component {
     constructor(props){
@@ -23,7 +27,7 @@ export default class MyPage extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <Container>
                 <NavigationBar title={"我的"}
                                statusBar={{
                                    backgroundColor: '#B8F4FF',
@@ -31,7 +35,10 @@ export default class MyPage extends Component {
                                style={{backgroundColor: '#B8F4FF'}}
 
                 />
-                <View style={styles.content}>
+                <Content>
+                    <ListItem itemDivider>
+                    </ListItem>
+
                     <ListItem icon onPress={()=>{
                         this.props.navigator.push({
                             component: CustomKeyPage,
@@ -75,8 +82,33 @@ export default class MyPage extends Component {
                             <Icon name="arrow-forward" />
                         </Right>
                     </ListItem>
-                </View>
-            </View>
+
+                    <ListItem itemDivider>
+                    </ListItem>
+                    <ListItem icon onPress={()=>{
+                        Alert.alert(
+                            '确定清除缓存？',
+                            null,
+                            [
+                                {text: 'Cancel'},
+                                {text: 'OK', onPress: () => {
+                                    AsyncStorage.getAllKeys((error, keys)=>{
+                                        console.log(keys);
+                                        let keys2 = keys.filter( (k)=> /^https/.test(k) );
+                                        console.log(keys2);
+                                        AsyncStorage.multiRemove(keys2, (errors)=>Alert.alert('清除' + (errors?'失败':'成功')));
+                                    });
+                                }},
+                            ]
+                        )
+                    }}>
+                        <Body>
+                        <Text>清除缓存</Text>
+                        </Body>
+                    </ListItem>
+
+                </Content>
+            </Container>
         );
     }
 }
