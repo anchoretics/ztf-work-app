@@ -6,11 +6,8 @@
  */
 
 module.exports = {
-	attributes: {
-		username: 'string',
-		email: 'string',
-		nickname: 'string',
-		password: 'string'
+	index: (req, res, next)=>{
+		
 	}
 };
 

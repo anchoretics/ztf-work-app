@@ -6,13 +6,13 @@
  */
 
 module.exports = {
-  attributes: {
-    userName: 'string',
-    email: 'string',
-    emailPassword: 'string',
-    empId: 'String',
-    empPassword: 'string',
-    avatar: 'string'
-  }
+	index: (req, res, next)=>{
+		console.log(req.session);
+		res.end("ok");
+	},
+	login: (req, res, next)=>{
+		console.log(req.method);
+		res.end();
+	}
 };
 

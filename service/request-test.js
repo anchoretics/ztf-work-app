@@ -1,5 +1,10 @@
 var request = require('request')
 
+var URL_CAS = "http://172.17.11.182/cas/login";
+var URL_HOME = "http://172.17.11.52/Default.aspx";
+var URL_EOSS = "http://172.17.11.98:8080/home.jsp";
+var URL_ASSESS = "http://172.17.11.67:8080/assess/";
+
 // let get_option = {
 // 	url: "http://172.17.11.182/cas/login",
 // 	headers: {
