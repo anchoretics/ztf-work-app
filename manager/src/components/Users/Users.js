@@ -1,18 +1,23 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Table, Pagination, Popconfirm } from 'antd';
+import { routerRedux } from 'dva/router';
 import styles from './Users.css';
 import { PAGE_SIZE } from '../../constants';
 
-const Users = ({ list: dataSource, loading, total, page: current }) => {
+const Users = ({ dispatch, list: dataSource, loading, total, page: current }) => {
   const deleteHandler = (id) => {
-    console.warn(`TODO: ${id}`);
-  }
-  const onChange = (page) => {
-    console.log(page);
-    this.setState({
-      current: page,
+    dispatch({
+      type: 'users/remove',
+      payload: id,
     });
+  }
+  const pageChangeHandler = (page) => {
+    console.log(page);
+    dispatch(routerRedux.push({
+      pathname: '/users',
+      query: { page }
+    }));
   }
   const columns = [
     {
@@ -37,7 +42,7 @@ const Users = ({ list: dataSource, loading, total, page: current }) => {
       render: (text, { id }) => (
         <span className={styles.operation}>
           <a href="">Edit</a>
-          <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, id)}>
+          <Popconfirm title="确定删除?" onConfirm={deleteHandler.bind(null, id)}>
             <a href="">Delete</a>
           </Popconfirm>
         </span>
@@ -59,7 +64,7 @@ const Users = ({ list: dataSource, loading, total, page: current }) => {
           total={total}
           current={current}
           pageSize={PAGE_SIZE}
-          onChange={onChange}
+          onChange={pageChangeHandler}
         />
       </div>
     </div>
